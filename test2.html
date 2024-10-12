@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protected Answers Page</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Enter Credentials to View Answers</h2>
+        <input type="email" id="emailInput" placeholder="Enter Email" required>
+        <input type="password" id="passwordInput" placeholder="Enter Password" required>
+        <br>
+        <button onclick="login()">Submit</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Answers:</h3>
+            <p><strong>Question 1:</strong> What is the capital of France?</p>
+            <p><strong>Answer:</strong> Paris.</p>
+            
+            <p><strong>Question 2:</strong> What is 2 + 2?</p>
+            <p><strong>Answer:</strong> 4.</p>
+            
+            <!-- Add more questions and answers as needed -->
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Your Firebase configuration (replace with your actual config)
+        const firebaseConfig = {
+          apiKey: "AIzaSyBXMC4zO6_hnau1_bbvIBt_kb_PJvz9e4U",
+          authDomain: "protectedcontentproject.firebaseapp.com",
+          projectId: "protectedcontentproject",
+          storageBucket: "protectedcontentproject.appspot.com",
+          messagingSenderId: "422112856405",
+          appId: "1:422112856405:web:bc8e48efa34b903cb7c7dc",
+          measurementId: "G-GR5ZE6GZBE"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        function login() {
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    errorMessage.textContent = '';
+                    fetchAnswers();
+                })
+                .catch((error) => {
+                    errorMessage.textContent = 'Incorrect email or password. Please try again.';
+                    answersSection.style.display = 'none';
+                });
+        }
+
+        function fetchAnswers() {
+            const answersSection = document.getElementById('answersSection');
+            const answersContainer = answersSection;
+
+            db.collection("questions").get().then((querySnapshot) => {
+                answersContainer.innerHTML = '<h3>Answers:</h3>';
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    answersContainer.innerHTML += `<p><strong>Question:</strong> ${data.question}</p>`;
+                    answersContainer.innerHTML += `<p><strong>Answer:</strong> ${data.answer}</p>`;
+                });
+                answersSection.style.display = 'block';
+            }).catch((error) => {
+                console.error("Error fetching answers: ", error);
+                answersSection.innerHTML = '<p class="error">Failed to load answers.</p>';
+                answersSection.style.display = 'block';
+            });
+        }
+
+        // Allow pressing "Enter" to submit the form
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
+
+</body>
+</html>
