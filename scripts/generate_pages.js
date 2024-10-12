@@ -24,7 +24,7 @@ function generateHTML(filename) {
 
     // Replace placeholders in the template
     let html = template.replace('{{title}}', title);
-    html = html.replace('{{markdown}}', markdown.replace(/`/g, '\\`')); // Escape backticks
+    html = html.replace('{{content}}', htmlContent);
 
     return html;
 }

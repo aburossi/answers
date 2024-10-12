@@ -1,15 +1,14 @@
 {
-  "name": "answers",
+  "name": "html-generator",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Automate HTML page generation from Markdown",
+  "main": "scripts/generate_pages.js",
   "scripts": {
     "generate": "node scripts/generate_pages.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "marked": "^14.1.2"
-  }
+    "marked": "^4.3.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
 }

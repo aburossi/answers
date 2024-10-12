@@ -66,7 +66,8 @@
         <div class="answers" id="answersSection">
             <h3>Antworten:</h3> 
             <div id="content">
-                <!-- Markdown content will be injected here -->
+                <!-- Rendered HTML content will be injected here -->
+                {{content}}
             </div> 
         </div>
     </div>
@@ -95,14 +96,6 @@
                 checkPassword();
             }
         });
-    </script>
-
-    <!-- Include a markdown parser, e.g., marked.js -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-        // Render markdown content
-        const markdownContent = `{{markdown}}`;
-        document.getElementById('content').innerHTML = marked.parse(markdownContent);
     </script>
 
 </body>
