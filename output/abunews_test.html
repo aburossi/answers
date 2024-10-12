@@ -78,8 +78,23 @@
     </div>
 
     <script>
-        // Define your password here
-        const correctPassword = "yourPassword123"; // Replace with your desired password
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load password file.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Error fetching the password:', error);
+                document.getElementById('errorMessage').textContent = 'Error loading password. Please try again later.';
+            });
 
         function checkPassword() {
             const userPassword = document.getElementById('passwordInput').value;

@@ -2,18 +2,24 @@ import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import markdown
+import shutil
+import json
 
 # Function to generate HTML from Markdown
 def generate_html():
     title = title_entry.get().strip()
     markdown_text = markdown_textbox.get("1.0", tk.END).strip()
     output_dir = output_dir_var.get().strip()
+    password = password_entry.get().strip()
 
     if not title:
         messagebox.showerror("Input Error", "Please enter a title for the HTML page.")
         return
     if not markdown_text:
         messagebox.showerror("Input Error", "Please enter Markdown content.")
+        return
+    if not password:
+        messagebox.showerror("Input Error", "Please enter a password.")
         return
 
     # Define paths
@@ -70,12 +76,35 @@ def generate_html():
     try:
         with open(output_path, "w", encoding="utf-8") as file:
             file.write(html_page)
-        messagebox.showinfo("Success", f"HTML page '{filename}' has been generated successfully!\n\nLocation: {output_path}")
-        # Clear the inputs
-        title_entry.delete(0, tk.END)
-        markdown_textbox.delete("1.0", tk.END)
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while writing the HTML file:\n{str(e)}")
+        return
+    
+    # Create or update passwords.json in the output directory
+    passwords_path = os.path.join(output_dir, "passwords.json")
+    try:
+        if os.path.exists(passwords_path):
+            # Load existing passwords
+            with open(passwords_path, "r", encoding="utf-8") as pwd_file:
+                passwords_data = json.load(pwd_file)
+        else:
+            passwords_data = {}
+
+        # Update the global password
+        passwords_data["password"] = password
+
+        # Write back to passwords.json
+        with open(passwords_path, "w", encoding="utf-8") as pwd_file:
+            json.dump(passwords_data, pwd_file, indent=4)
+    except Exception as e:
+        messagebox.showerror("Password File Error", f"An error occurred while handling passwords.json:\n{str(e)}")
+        return
+
+    messagebox.showinfo("Success", f"HTML page '{filename}' has been generated successfully!\n\nLocation: {output_path}")
+    # Clear the inputs
+    title_entry.delete(0, tk.END)
+    markdown_textbox.delete("1.0", tk.END)
+    password_entry.delete(0, tk.END)
 
 # Function to select output directory
 def select_output_directory():
@@ -86,7 +115,7 @@ def select_output_directory():
 # Initialize the main window
 root = tk.Tk()
 root.title("Markdown to HTML Generator")
-root.geometry("800x700")
+root.geometry("800x800")
 root.resizable(False, False)
 
 # Title Label and Entry
@@ -102,6 +131,13 @@ markdown_label.pack()
 
 markdown_textbox = tk.Text(root, width=95, height=20, font=("Arial", 12), wrap=tk.WORD)
 markdown_textbox.pack(pady=(0, 20))
+
+# Password Label and Entry
+password_label = tk.Label(root, text="Global Password:", font=("Arial", 12))
+password_label.pack()
+
+password_entry = tk.Entry(root, width=50, font=("Arial", 12), show="*")
+password_entry.pack(pady=(0, 20))
 
 # Output Directory Label and Entry
 output_dir_label = tk.Label(root, text="Output Directory:", font=("Arial", 12))
