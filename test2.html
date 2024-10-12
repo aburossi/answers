@@ -56,7 +56,6 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <h2>Enter Credentials to View Answers</h2>
         <input type="email" id="emailInput" placeholder="Enter Email" required>
@@ -65,11 +64,12 @@
         <button id="submitBtn">Submit</button>
         <div class="error" id="errorMessage"></div>
         
-        <div class="answers" id="answersSection">
-            <h3>Answers:</h3>
+        <div class="answers" id="answersSection" style="display: none;">
             <!-- Answers will be dynamically loaded here -->
         </div>
     </div>
+
+    <!-- Firebase SDKs --
 
     <!-- Firebase SDKs -->
     <script type="module">
