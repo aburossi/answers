@@ -62,86 +62,99 @@
         <input type="email" id="emailInput" placeholder="Enter Email" required>
         <input type="password" id="passwordInput" placeholder="Enter Password" required>
         <br>
-        <button onclick="login()">Submit</button>
+        <button id="submitBtn">Submit</button>
         <div class="error" id="errorMessage"></div>
         
         <div class="answers" id="answersSection">
             <h3>Answers:</h3>
-            <p><strong>Question 1:</strong> What is the capital of France?</p>
-            <p><strong>Answer:</strong> Paris.</p>
-            
-            <p><strong>Question 2:</strong> What is 2 + 2?</p>
-            <p><strong>Answer:</strong> 4.</p>
-            
-            <!-- Add more questions and answers as needed -->
+            <!-- Answers will be dynamically loaded here -->
         </div>
     </div>
 
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
+      import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+      import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-    <script>
-        // Your Firebase configuration (replace with your actual config)
-        const firebaseConfig = {
-          apiKey: "AIzaSyBXMC4zO6_hnau1_bbvIBt_kb_PJvz9e4U",
-          authDomain: "protectedcontentproject.firebaseapp.com",
-          projectId: "protectedcontentproject",
-          storageBucket: "protectedcontentproject.appspot.com",
-          messagingSenderId: "422112856405",
-          appId: "1:422112856405:web:bc8e48efa34b903cb7c7dc",
-          measurementId: "G-GR5ZE6GZBE"
-        };
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBXMC4zO6_hnau1_bbvIBt_kb_PJvz9e4U",
+        authDomain: "protectedcontentproject.firebaseapp.com",
+        projectId: "protectedcontentproject",
+        storageBucket: "protectedcontentproject.appspot.com",
+        messagingSenderId: "422112856405",
+        appId: "1:422112856405:web:bc8e48efa34b903cb7c7dc",
+        measurementId: "G-GR5ZE6GZBE"
+      };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth();
+      const db = getFirestore();
 
-        function login() {
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('passwordInput').value;
-            const errorMessage = document.getElementById('errorMessage');
-            const answersSection = document.getElementById('answersSection');
+      // Function to handle login
+      async function login() {
+          const email = document.getElementById('emailInput').value.trim();
+          const password = document.getElementById('passwordInput').value.trim();
+          const errorMessage = document.getElementById('errorMessage');
+          const answersSection = document.getElementById('answersSection');
 
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    errorMessage.textContent = '';
-                    fetchAnswers();
-                })
-                .catch((error) => {
-                    errorMessage.textContent = 'Incorrect email or password. Please try again.';
-                    answersSection.style.display = 'none';
-                });
-        }
+          if (!email || !password) {
+              errorMessage.textContent = 'Please enter both email and password.';
+              return;
+          }
 
-        function fetchAnswers() {
-            const answersSection = document.getElementById('answersSection');
-            const answersContainer = answersSection;
+          try {
+              // Sign in with Firebase Authentication
+              const userCredential = await signInWithEmailAndPassword(auth, email, password);
+              const user = userCredential.user;
 
-            db.collection("questions").get().then((querySnapshot) => {
-                answersContainer.innerHTML = '<h3>Answers:</h3>';
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    answersContainer.innerHTML += `<p><strong>Question:</strong> ${data.question}</p>`;
-                    answersContainer.innerHTML += `<p><strong>Answer:</strong> ${data.answer}</p>`;
-                });
-                answersSection.style.display = 'block';
-            }).catch((error) => {
-                console.error("Error fetching answers: ", error);
-                answersSection.innerHTML = '<p class="error">Failed to load answers.</p>';
-                answersSection.style.display = 'block';
-            });
-        }
+              // Clear any previous error messages
+              errorMessage.textContent = '';
 
-        // Allow pressing "Enter" to submit the form
-        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                login();
-            }
-        });
+              // Fetch and display answers
+              await fetchAnswers();
+
+          } catch (error) {
+              console.error("Authentication Error:", error);
+              errorMessage.textContent = 'Incorrect email or password. Please try again.';
+              document.getElementById('answersSection').style.display = 'none';
+          }
+      }
+
+      // Function to fetch answers from Firestore
+      async function fetchAnswers() {
+          const answersSection = document.getElementById('answersSection');
+          answersSection.innerHTML = '<h3>Answers:</h3>'; // Reset content
+
+          try {
+              const querySnapshot = await getDocs(collection(db, "questions"));
+              querySnapshot.forEach((doc) => {
+                  const data = doc.data();
+                  answersSection.innerHTML += `<p><strong>Question:</strong> ${data.question}</p>`;
+                  answersSection.innerHTML += `<p><strong>Answer:</strong> ${data.answer}</p>`;
+              });
+              answersSection.style.display = 'block';
+          } catch (error) {
+              console.error("Error fetching answers: ", error);
+              answersSection.innerHTML = '<p class="error">Failed to load answers.</p>';
+              answersSection.style.display = 'block';
+          }
+      }
+
+      // Event listener for the submit button
+      document.getElementById('submitBtn').addEventListener('click', login);
+
+      // Allow pressing "Enter" to submit the form
+      document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') {
+              login();
+          }
+      });
     </script>
 
 </body>
