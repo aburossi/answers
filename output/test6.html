@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test6</title>
+    <style>
+        /* Your existing styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        /* Add more styles as needed */
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>test6</h2>
+        <div id="content">
+            <p>import os
+import tkinter as tk
+from tkinter import filedialog, messagebox
+import markdown</p>
+<h1 id="function-to-generate-html-from-markdown">Function to generate HTML from Markdown</h1>
+<p>def generate_html():
+    title = title_entry.get().strip()
+    markdown_text = markdown_textbox.get("1.0", tk.END).strip()
+    output_dir = output_dir_var.get().strip()</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">title</span><span class="p">:</span>
+<span class="w">    </span><span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Input Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Please enter a title for the HTML page.&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">markdown_text</span><span class="p">:</span>
+<span class="w">    </span><span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Input Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Please enter Markdown content.&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+
+<span class="c1"># Define paths</span>
+<span class="n">script_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+<span class="n">template_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;template.html&quot;</span><span class="p">)</span>
+
+<span class="c1"># Set default output directory if not specified</span>
+<span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">output_dir</span><span class="p">:</span>
+<span class="w">    </span><span class="n">output_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;output&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Expand user tilde (~) and environment variables</span>
+<span class="w">    </span><span class="n">output_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expandvars</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">output_dir</span><span class="p">))</span>
+
+<span class="c1"># Check if template exists</span>
+<span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">template_path</span><span class="p">):</span>
+<span class="w">    </span><span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Template Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="s2">&quot;Template file not found at {template_path}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+
+<span class="c1"># Create output directory if it doesn&#39;t exist</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="n">exist_ok</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+
+<span class="c1"># Read the HTML template</span>
+<span class="n">try</span><span class="p">:</span>
+<span class="w">    </span><span class="n">with</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="n">template_path</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">file</span><span class="p">:</span>
+<span class="w">        </span><span class="n">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">except</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">e</span><span class="p">:</span>
+<span class="w">    </span><span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Template Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="s2">&quot;An error occurred while reading the template:</span><span class="se">\n</span><span class="s2">{str(e)}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+
+<span class="c1"># Convert Markdown to HTML</span>
+<span class="n">try</span><span class="p">:</span>
+<span class="w">    </span><span class="n">html_content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">markdown</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="n">markdown_text</span><span class="p">,</span><span class="w"> </span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;extra&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;codehilite&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;toc&#39;</span><span class="p">])</span>
+<span class="n">except</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">e</span><span class="p">:</span>
+<span class="w">    </span><span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Markdown Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="s2">&quot;An error occurred while converting Markdown to HTML:</span><span class="se">\n</span><span class="s2">{str(e)}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+
+<span class="c1"># Replace placeholders</span>
+<span class="n">html_page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">template</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{{title}}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{{content}}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">html_content</span><span class="p">)</span>
+
+<span class="c1"># Define the output file path</span>
+<span class="c1"># Sanitize filename by removing or replacing invalid characters</span>
+<span class="n">invalid_chars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sa">r</span><span class="s1">&#39;&lt;&gt;:&quot;/\|?*&#39;</span>
+<span class="n">sanitized_title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">invalid_chars</span><span class="p">)</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="s2">&quot;{sanitized_title}.html&quot;</span>
+<span class="n">output_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c1"># Check if file already exists</span>
+<span class="k">if</span><span class="w"> </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_path</span><span class="p">):</span>
+<span class="w">    </span><span class="n">overwrite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">messagebox</span><span class="o">.</span><span class="n">askyesno</span><span class="p">(</span><span class="s2">&quot;File Exists&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="s2">&quot;The file &#39;{filename}&#39; already exists. Do you want to overwrite it?&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">overwrite</span><span class="p">:</span>
+<span class="w">        </span><span class="k">return</span>
+
+<span class="c1"># Write the HTML file</span>
+<span class="n">try</span><span class="p">:</span>
+<span class="w">    </span><span class="n">with</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;w&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">file</span><span class="p">:</span>
+<span class="w">        </span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_page</span><span class="p">)</span>
+<span class="w">    </span><span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="s2">&quot;HTML page &#39;{filename}&#39; has been generated successfully!</span><span class="se">\n\n</span><span class="s2">Location: {output_path}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="c1"># Clear the inputs</span>
+<span class="w">    </span><span class="n">title_entry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+<span class="w">    </span><span class="n">markdown_textbox</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+<span class="n">except</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">e</span><span class="p">:</span>
+<span class="w">    </span><span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="s2">&quot;An error occurred while writing the HTML file:</span><span class="se">\n</span><span class="s2">{str(e)}&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h1 id="function-to-select-output-directory">Function to select output directory</h1>
+<p>def select_output_directory():
+    directory = filedialog.askdirectory()
+    if directory:
+        output_dir_var.set(directory)</p>
+<h1 id="initialize-the-main-window">Initialize the main window</h1>
+<p>root = tk.Tk()
+root.title("Markdown to HTML Generator")
+root.geometry("800x700")
+root.resizable(False, False)</p>
+<h1 id="title-label-and-entry">Title Label and Entry</h1>
+<p>title_label = tk.Label(root, text="HTML Page Title:", font=("Arial", 12))
+title_label.pack(pady=(20, 5))</p>
+<p>title_entry = tk.Entry(root, width=100, font=("Arial", 12))
+title_entry.pack(pady=(0, 20))</p>
+<h1 id="markdown-label-and-textbox">Markdown Label and Textbox</h1>
+<p>markdown_label = tk.Label(root, text="Markdown Content:", font=("Arial", 12))
+markdown_label.pack()</p>
+<p>markdown_textbox = tk.Text(root, width=95, height=20, font=("Arial", 12), wrap=tk.WORD)
+markdown_textbox.pack(pady=(0, 20))</p>
+<h1 id="output-directory-label-and-entry">Output Directory Label and Entry</h1>
+<p>output_dir_label = tk.Label(root, text="Output Directory:", font=("Arial", 12))
+output_dir_label.pack()</p>
+<p>output_dir_var = tk.StringVar()
+output_dir_entry = tk.Entry(root, textvariable=output_dir_var, width=80, font=("Arial", 12))
+output_dir_entry.pack(pady=(0, 5))</p>
+<p>browse_button = tk.Button(root, text="Browse", command=select_output_directory, font=("Arial", 10))
+browse_button.pack(pady=(0, 20))</p>
+<h1 id="generate-button">Generate Button</h1>
+<p>generate_button = tk.Button(root, text="Generate HTML", command=generate_html, font=("Arial", 12), bg="#4CAF50", fg="white", padx=10, pady=5)
+generate_button.pack(pady=(0, 20))</p>
+<h1 id="start-the-gui-event-loop">Start the GUI event loop</h1>
+<p>root.mainloop()</p>
+        </div>
+    </div>
+
+</body>
+</html>
