@@ -126,25 +126,41 @@
           }
       }
 
-      // Function to fetch answers from Firestore
-      async function fetchAnswers() {
-          const answersSection = document.getElementById('answersSection');
-          answersSection.innerHTML = '<h3>Answers:</h3>'; // Reset content
+        // Function to fetch answers from Firestore
+        async function fetchAnswers() {
+            const answersSection = document.getElementById('answersSection');
+            answersSection.innerHTML = ''; // Clear any existing content
+        
+            try {
+                const querySnapshot = await getDocs(collection(db, "questions"));
+                
+                // Dynamically add the "Answers" heading
+                const heading = document.createElement('h3');
+                heading.textContent = 'Answers:';
+                answersSection.appendChild(heading);
+        
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    
+                    // Create and append question paragraph
+                    const questionPara = document.createElement('p');
+                    questionPara.innerHTML = `<strong>Question:</strong> ${data.question}`;
+                    answersSection.appendChild(questionPara);
+        
+                    // Create and append answer paragraph
+                    const answerPara = document.createElement('p');
+                    answerPara.innerHTML = `<strong>Answer:</strong> ${data.answer}`;
+                    answersSection.appendChild(answerPara);
+                });
+        
+                answersSection.style.display = 'block';
+            } catch (error) {
+                console.error("Error fetching answers: ", error);
+                answersSection.innerHTML = '<p class="error">Failed to load answers.</p>';
+                answersSection.style.display = 'block';
+            }
+        }
 
-          try {
-              const querySnapshot = await getDocs(collection(db, "questions"));
-              querySnapshot.forEach((doc) => {
-                  const data = doc.data();
-                  answersSection.innerHTML += `<p><strong>Question:</strong> ${data.question}</p>`;
-                  answersSection.innerHTML += `<p><strong>Answer:</strong> ${data.answer}</p>`;
-              });
-              answersSection.style.display = 'block';
-          } catch (error) {
-              console.error("Error fetching answers: ", error);
-              answersSection.innerHTML = '<p class="error">Failed to load answers.</p>';
-              answersSection.style.display = 'block';
-          }
-      }
 
       // Event listener for the submit button
       document.getElementById('submitBtn').addEventListener('click', login);
