@@ -53,6 +53,20 @@
             color: red;
             margin-top: 10px;
         }
+        /* Loader Styling */
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #4CAF50;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -65,17 +79,25 @@
         <button id="submitBtn">Submit</button>
         <div class="error" id="errorMessage"></div>
         
-        <div class="answers" id="answersSection" style="display: none;">
+        <!-- Loader -->
+        <div class="loader" id="loader" style="display: none;"></div>
+        
+        <!-- Answers Section -->
+        <div class="answers" id="answersSection">
             <!-- Answers will be dynamically loaded here -->
+            <!-- The heading and list will be inserted via JavaScript -->
         </div>
+        
+        <!-- Logout Button -->
+        <button id="logoutBtn" style="display: none; margin-top: 20px;">Logout</button>
     </div>
 
     <!-- Firebase SDKs -->
     <script type="module">
-      // Import the functions you need from the SDKs you need
+      // Import the necessary Firebase modules
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
-      import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+      import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
       import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
       // Your web app's Firebase configuration
@@ -101,55 +123,64 @@
           const password = document.getElementById('passwordInput').value.trim();
           const errorMessage = document.getElementById('errorMessage');
           const answersSection = document.getElementById('answersSection');
+          const loader = document.getElementById('loader');
 
           if (!email || !password) {
               errorMessage.textContent = 'Please enter both email and password.';
               return;
           }
 
+          // Show loader
+          loader.style.display = 'block';
+          errorMessage.textContent = '';
+
           try {
               // Sign in with Firebase Authentication
               const userCredential = await signInWithEmailAndPassword(auth, email, password);
               const user = userCredential.user;
 
-              // Clear any previous error messages
-              errorMessage.textContent = '';
-
               // Fetch and display answers
               await fetchAnswers();
+
+              // Show logout button
+              document.getElementById('logoutBtn').style.display = 'block';
 
           } catch (error) {
               console.error("Authentication Error:", error);
               errorMessage.textContent = 'Incorrect email or password. Please try again.';
               answersSection.style.display = 'none';
+          } finally {
+              // Hide loader
+              loader.style.display = 'none';
           }
       }
 
       // Function to fetch answers from Firestore
       async function fetchAnswers() {
           const answersSection = document.getElementById('answersSection');
+          const loader = document.getElementById('loader');
           answersSection.innerHTML = ''; // Clear any existing content
 
           try {
               const querySnapshot = await getDocs(collection(db, "questions"));
               
-              // Dynamically add the "Answers" heading
+              // Create and append the "Answers" heading
               const heading = document.createElement('h3');
               heading.textContent = 'Answers:';
               answersSection.appendChild(heading);
 
+              // Create and append the ordered list
+              const ol = document.createElement('ol');
+              answersSection.appendChild(ol);
+
+              // Iterate through the documents and add list items
               querySnapshot.forEach((doc) => {
                   const data = doc.data();
                   
-                  // Create and append question paragraph
-                  const questionPara = document.createElement('p');
-                  questionPara.innerHTML = `<strong>Question:</strong> ${data.question}`;
-                  answersSection.appendChild(questionPara);
-
-                  // Create and append answer paragraph
-                  const answerPara = document.createElement('p');
-                  answerPara.innerHTML = `<strong>Answer:</strong> ${data.answer}`;
-                  answersSection.appendChild(answerPara);
+                  // Create list item for each answer
+                  const li = document.createElement('li');
+                  li.innerHTML = `<strong>Question:</strong> ${data.question}<br><strong>Answer:</strong> ${data.answer}`;
+                  ol.appendChild(li);
               });
 
               answersSection.style.display = 'block';
@@ -160,13 +191,43 @@
           }
       }
 
+      // Function to handle logout
+      async function logout() {
+          try {
+              await signOut(auth);
+              document.getElementById('answersSection').style.display = 'none';
+              document.getElementById('logoutBtn').style.display = 'none';
+              document.getElementById('errorMessage').textContent = 'Logged out successfully.';
+          } catch (error) {
+              console.error("Logout Error:", error);
+              document.getElementById('errorMessage').textContent = 'Failed to log out. Please try again.';
+          }
+      }
+
       // Event listener for the submit button
       document.getElementById('submitBtn').addEventListener('click', login);
+
+      // Event listener for the logout button
+      document.getElementById('logoutBtn').addEventListener('click', logout);
 
       // Allow pressing "Enter" to submit the form
       document.getElementById('passwordInput').addEventListener('keypress', function (e) {
           if (e.key === 'Enter') {
               login();
+          }
+      });
+
+      // Auth state listener to handle user state changes
+      onAuthStateChanged(auth, (user) => {
+          if (user) {
+              // User is signed in, fetch and display answers
+              fetchAnswers();
+              // Show logout button
+              document.getElementById('logoutBtn').style.display = 'block';
+          } else {
+              // User is signed out, hide answers and logout button
+              document.getElementById('answersSection').style.display = 'none';
+              document.getElementById('logoutBtn').style.display = 'none';
           }
       });
     </script>
