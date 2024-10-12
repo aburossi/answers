@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abunews_test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Enter Password to View Answers</h2>
+        <input type="password" id="passwordInput" placeholder="Enter Password">
+        <br>
+        <button onclick="checkPassword()">Submit</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Answers:</h3> 
+            <blockquote>
+<p>[!warning]
+1. <strong>Die Tochter von Frau Müller</strong> hat einen Lehrvertrag abgeschlossen, möchte diesen aber nicht einhalten.
+2. <strong>Ein Lehrvertrag</strong> ist wie jeder andere Vertrag und muss grundsätzlich eingehalten werden.
+3. <strong>Schadenersatzforderungen</strong> sind theoretisch möglich, aber in der Praxis unwahrscheinlich.
+4. <strong>Die Probezeit</strong> erlaubt es, den Vertrag ohne Angabe von Gründen zu kündigen.
+5. <strong>Der Lehrmeister</strong> muss versuchen, einen Ersatz für die Lehrtochter zu finden, um finanziellen Schaden zu vermeiden.
+6. <strong>In den meisten Fällen</strong> wird keine Schadenersatzforderung erhoben.
+7. <strong>Ein früher Rücktritt</strong> erhöht die Chancen, einen Ersatz zu finden.</p>
+</blockquote>
+        </div>
+    </div>
+
+    <script>
+        // Define your password here
+        const correctPassword = "yourPassword123"; // Replace with your desired password
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Incorrect password. Please try again.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Allow pressing "Enter" to submit the password
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
