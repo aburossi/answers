@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.4.2_abunews</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Enter Password to View Answers</h2>
+        <input type="password" id="passwordInput" placeholder="Enter Password">
+        <br>
+        <button onclick="checkPassword()">Submit</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Answers:</h3> 
+            <h1 id="2-ausbildung-in-der-schweiz">2. Ausbildung in der Schweiz</h1>
+<ol>
+<li><strong>Stress</strong>, <strong>Mobbing</strong>, <strong>sexuelle Belästigung</strong>, und <strong>Unzufriedenheit</strong> sind die Hauptprobleme.</li>
+<li><strong>Partizipativer Ansatz</strong> gemeinsam mit jungen Lernenden erarbeitet.</li>
+<li><strong>35 %</strong> der Befragten sind unzufrieden oder nur befriedigt.</li>
+<li><strong>Subjektivität</strong> der Ergebnisse und Methodologie der Umfrage.</li>
+<li><strong>Private, betriebliche, schulische</strong> Ursachen möglich.</li>
+<li><strong>Unabhängigkeit</strong> der Überprüfung und Subjektivität der Begriffe.</li>
+<li>Lernende könnten <strong>abschreckt</strong> werden, eine Lehre zu machen.</li>
+</ol>
+<h1 id="4-kontrollen-in-der-berufsbildung">4. Kontrollen in der Berufsbildung</h1>
+<ol>
+<li><strong>Welche</strong> Massnahmen fordert die UNIA, um die Berufslehre zu verbessern?</li>
+<li><strong>Wie</strong> reagiert der Gewerbeverband auf die Kritik der UNIA?</li>
+<li><strong>Was</strong> ist die Aufgabe der kantonalen Behörden in Bezug auf die Berufslehre?</li>
+<li><strong>Welche</strong> Kontrollen führen die Kantone in Ausbildungsbetrieben durch?</li>
+<li><strong>Warum</strong> zweifelt die UNIA an der Effektivität der Kontrollen?</li>
+<li><strong>Wie</strong> begründet Barbara Gysi vom Kanton Bern die Durchführung von Kontrollen?</li>
+<li><strong>Welche</strong> Konsequenzen könnte eine mangelnde Kontrolle in Betrieben haben?</li>
+</ol>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load password file.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Error fetching the password:', error);
+                document.getElementById('errorMessage').textContent = 'Error loading password. Please try again later.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Incorrect password. Please try again.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Allow pressing "Enter" to submit the password
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
