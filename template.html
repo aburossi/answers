@@ -1,171 +1,117 @@
-import os
-import tkinter as tk
-from tkinter import filedialog, messagebox
-import markdown
-import shutil  # Für das Kopieren von Dateien
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
 
-# Funktion zum Auswählen der Bilddatei
-def select_image_file():
-    filetypes = (
-        ("Bilddateien", "*.png *.jpg *.jpeg *.gif *.bmp"),
-        ("Alle Dateien", "*.*")
-    )
-    filepath = filedialog.askopenfilename(title="Bilddatei auswählen", initialdir=os.getcwd(), filetypes=filetypes)
-    if filepath:
-        image_path_var.set(filepath)
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
 
-# Funktion zum Generieren der HTML und Einbetten des Bildes
-def generate_html():
-    title = title_entry.get().strip()
-    markdown_text = markdown_textbox.get("1.0", tk.END).strip()
-    output_dir = output_dir_var.get().strip()
-    image_path = image_path_var.get().strip()  # Neuer Code: Bildpfad erhalten
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
 
-    if not title:
-        messagebox.showerror("Input Error", "Bitte gib einen Titel für die HTML-Seite ein.")
-        return
-    if not markdown_text:
-        messagebox.showerror("Input Error", "Bitte gib den Markdown-Inhalt ein.")
-        return
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
 
-    # Define paths
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    template_path = os.path.join(script_dir, "template.html")
-    
-    # Set default output directory if not specified
-    if not output_dir:
-        output_dir = os.path.join(script_dir, "output")
-    else:
-        # Expand user tilde (~) and environment variables
-        output_dir = os.path.expandvars(os.path.expanduser(output_dir))
-    
-    # Check if template exists
-    if not os.path.isfile(template_path):
-        messagebox.showerror("Template Error", f"Template-Datei nicht gefunden unter {template_path}")
-        return
-    
-    # Create output directory if it doesn't exist
-    os.makedirs(output_dir, exist_ok=True)
-    
-    # Read the HTML template
-    try:
-        with open(template_path, "r", encoding="utf-8") as file:
-            template = file.read()
-    except Exception as e:
-        messagebox.showerror("Template Error", f"Beim Lesen der Template-Datei ist ein Fehler aufgetreten:\n{str(e)}")
-        return
-    
-    # Convert Markdown to HTML
-    try:
-        html_content = markdown.markdown(markdown_text, extensions=['extra', 'codehilite', 'toc'])
-    except Exception as e:
-        messagebox.showerror("Markdown Error", f"Beim Konvertieren von Markdown zu HTML ist ein Fehler aufgetreten:\n{str(e)}")
-        return
-    
-    # Optional: Bild hinzufügen
-    if image_path:
-        if not os.path.isfile(image_path):
-            messagebox.showerror("Bild Fehler", f"Die ausgewählte Bilddatei wurde nicht gefunden:\n{image_path}")
-            return
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
         
-        # Definiere den Zielpfad für das Bild
-        image_filename = os.path.basename(image_path)
-        sanitized_image_filename = ''.join(c for c in image_filename if c not in r'<>:"/\|?*')
-        destination_image_path = os.path.join(output_dir, sanitized_image_filename)
-        
-        try:
-            # Kopiere die Bilddatei ins Ausgabeordner
-            if not os.path.exists(destination_image_path):
-                shutil.copy(image_path, destination_image_path)
-        except Exception as e:
-            messagebox.showerror("Bild Fehler", f"Beim Kopieren der Bilddatei ist ein Fehler aufgetreten:\n{str(e)}")
-            return
-        
-        # Füge den <img>-Tag zum HTML-Inhalt hinzu
-        # Optional: Du kannst hier weitere Attribute wie width, height, alt etc. hinzufügen
-        img_tag = f'<img src="{sanitized_image_filename}" alt="Bild" style="max-width:100%; height:auto;">'
-        html_content += f"\n<br>\n{img_tag}"  # Fügt das Bild nach dem Inhalt ein
-    
-    # Replace placeholders
-    html_page = template.replace("{{title}}", title).replace("{{content}}", html_content)
-    
-    # Define the output file path
-    # Sanitize filename by removing or replacing invalid characters
-    invalid_chars = r'<>:"/\|?*'
-    sanitized_title = ''.join(c for c in title if c not in invalid_chars)
-    filename = f"{sanitized_title}.html"
-    output_path = os.path.join(output_dir, filename)
-    
-    # Check if file already exists
-    if os.path.exists(output_path):
-        overwrite = messagebox.askyesno("Datei existiert", f"Die Datei '{filename}' existiert bereits. Möchtest du sie überschreiben?")
-        if not overwrite:
-            return
-    
-    # Write the HTML file
-    try:
-        with open(output_path, "w", encoding="utf-8") as file:
-            file.write(html_page)
-        messagebox.showinfo("Erfolg", f"HTML-Seite '{filename}' wurde erfolgreich generiert!\n\nOrt: {output_path}")
-        
-        # Clear the inputs
-        title_entry.delete(0, tk.END)
-        markdown_textbox.delete("1.0", tk.END)
-        image_path_var.set("")  # Leere das Bildfeld
-    except Exception as e:
-        messagebox.showerror("Fehler", f"Beim Schreiben der HTML-Datei ist ein Fehler aufgetreten:\n{str(e)}")
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            {{content}}
+        </div>
+    </div>
 
-# Funktion zum Auswählen des Ausgabeordners (besteht bereits)
-def select_output_directory():
-    directory = filedialog.askdirectory()
-    if directory:
-        output_dir_var.set(directory)
+    <script>
+        let correctPassword = "";
 
-# Initialize the main window
-root = tk.Tk()
-root.title("Markdown zu HTML Generator")
-root.geometry("800x800")  # Erhöhe die Höhe, um Platz für das neue Bildfeld zu haben
-root.resizable(False, False)
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
 
-# Title Label and Entry
-title_label = tk.Label(root, text="HTML Seitentitel:", font=("Arial", 12))
-title_label.pack(pady=(20, 5))
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
 
-title_entry = tk.Entry(root, width=100, font=("Arial", 12))
-title_entry.pack(pady=(0, 20))
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
 
-# Markdown Label and Textbox
-markdown_label = tk.Label(root, text="Markdown Inhalt:", font=("Arial", 12))
-markdown_label.pack()
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
 
-markdown_textbox = tk.Text(root, width=95, height=20, font=("Arial", 12), wrap=tk.WORD)
-markdown_textbox.pack(pady=(0, 20))
-
-# Output Directory Label and Entry
-output_dir_label = tk.Label(root, text="Ausgabeordner:", font=("Arial", 12))
-output_dir_label.pack()
-
-output_dir_var = tk.StringVar()
-output_dir_entry = tk.Entry(root, textvariable=output_dir_var, width=80, font=("Arial", 12))
-output_dir_entry.pack(pady=(0, 5))
-
-browse_button = tk.Button(root, text="Durchsuchen", command=select_output_directory, font=("Arial", 10))
-browse_button.pack(pady=(0, 20))
-
-# Bild Datei Label und Entry
-image_label = tk.Label(root, text="Optionales Bild:", font=("Arial", 12))
-image_label.pack()
-
-image_path_var = tk.StringVar()
-image_path_entry = tk.Entry(root, textvariable=image_path_var, width=80, font=("Arial", 12), state='readonly')
-image_path_entry.pack(pady=(0, 5))
-
-browse_image_button = tk.Button(root, text="Bild auswählen", command=select_image_file, font=("Arial", 10))
-browse_image_button.pack(pady=(0, 20))
-
-# Generate Button
-generate_button = tk.Button(root, text="HTML Generieren", command=generate_html, font=("Arial", 12), bg="#4CAF50", fg="white", padx=10, pady=5)
-generate_button.pack(pady=(0, 20))
-
-# Start the GUI event loop
-root.mainloop()
+</body>
+</html>
