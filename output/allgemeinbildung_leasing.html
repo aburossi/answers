@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>allgemeinbildung_leasing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Enter Password to View Answers</h2>
+        <input type="password" id="passwordInput" placeholder="Enter Password">
+        <br>
+        <button onclick="checkPassword()">Submit</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Answers:</h3> 
+            <h2 id="leasingarten">Leasingarten</h2>
+<ul>
+<li><strong>Unterschied zwischen direktem und indirektem Leasing:</strong></li>
+<li>Direktes Leasing: Vertrag wird direkt mit dem Hersteller oder dessen Vertriebsgesellschaft abgeschlossen.</li>
+<li>
+<p>Indirektes Leasing: Vertrag wird mit einer unabhängigen Leasinggesellschaft geschlossen.</p>
+</li>
+<li>
+<p><strong>Vorteile:</strong></p>
+</li>
+<li>Direktes Leasing: Direkter Kontakt mit dem Hersteller; oft günstiger.</li>
+<li>
+<p>Indirektes Leasing: Flexiblere Angebote und Konditionen durch unabhängige Leasinggesellschaften.</p>
+</li>
+<li>
+<p><strong>Grafik (Seite 194):</strong></p>
+</li>
+<li>
+<p>Die Grafik zeigt den Ablauf des indirekten Leasings.</p>
+</li>
+<li>
+<p><strong>Reflexion:</strong> Bevorzugung hängt von den individuellen Bedürfnissen ab. Direktes Leasing ist oft einfacher und schneller, indirektes Leasing bietet mehr Optionen.</p>
+</li>
+</ul>
+<hr />
+<h2 id="inhalte-leasingvertrag">Inhalte Leasingvertrag</h2>
+<ul>
+<li><strong>Zwingende Inhalte eines Leasingvertrags gemäß KKG:</strong></li>
+<li>Beschreibung der Leasingsache.</li>
+<li>Barkaufpreis vor Vertragsabschluss.</li>
+<li>Anzahl, Höhe und Fälligkeit der Leasingraten.</li>
+<li>Höhe der Kaution.</li>
+<li>Allfällig verlangte Versicherungen.</li>
+<li>Effektiver Jahreszins.</li>
+<li>
+<p>Hinweis auf Widerrufsrecht und Bedingungen für vorzeitige Vertragsauflösung.</p>
+</li>
+<li>
+<p><strong>Wichtigkeit:</strong></p>
+</li>
+<li>
+<p>Diese Inhalte stellen sicher, dass die Rechte und Pflichten beider Parteien klar definiert sind und verhindern Missverständnisse.</p>
+</li>
+<li>
+<p><strong>Konsequenzen bei fehlenden Inhalten:</strong></p>
+</li>
+<li>
+<p>Der Vertrag könnte als nicht rechtsgültig angesehen werden, was zu rechtlichen Problemen führen kann.</p>
+</li>
+<li>
+<p><strong>Reflexion:</strong> Viele Leasingnehmer verstehen die Inhalte oft nicht vollständig. Transparenz könnte durch einfachere Sprache oder zusätzliche Beratung verbessert werden.</p>
+</li>
+</ul>
+<hr />
+<h2 id="leasingkosten">Leasingkosten</h2>
+<ul>
+<li><strong>Komponenten der Leasinggebühr:</strong></li>
+<li>Abschreibung (Wertminderung des Autos).</li>
+<li>
+<p>Zinsen für das eingesetzte Kapital.</p>
+</li>
+<li>
+<p><strong>Zusätzliche Kosten:</strong></p>
+</li>
+<li>Versicherungen (z. B. Vollkasko, Haftpflicht).</li>
+<li>Kilometeraufschläge bei Überschreitung.</li>
+<li>
+<p>Wartung und Reparaturen.</p>
+</li>
+<li>
+<p><strong>Faktoren, die die Leasingrate beeinflussen:</strong></p>
+</li>
+<li>Dauer des Leasingvertrags.</li>
+<li>Vereinbarte Kilometerleistung.</li>
+<li>
+<p>Höhe der Kaution.</p>
+</li>
+<li>
+<p><strong>Reflexion:</strong> Kostenreduktion durch realistische Kilometerabschätzung, Wahl eines günstigen Modells und Vergleich von Angeboten.</p>
+</li>
+</ul>
+<hr />
+<h2 id="vorzeitige-auflosung">Vorzeitige Auflösung</h2>
+<ul>
+<li><strong>Konsequenzen:</strong></li>
+<li>Neuberechnung der Leasingraten unter Berücksichtigung der kürzeren Vertragslaufzeit.</li>
+<li>
+<p>Zusätzliche Kosten durch höhere monatliche Raten.</p>
+</li>
+<li>
+<p><strong>Berechnung:</strong></p>
+</li>
+<li>
+<p>Kürzere Laufzeit bedeutet weniger Abschreibung, aber höhere Belastung pro Monat.</p>
+</li>
+<li>
+<p><strong>Nachzahlungen:</strong></p>
+</li>
+<li>
+<p>Entstehen durch den Ausgleich der verbleibenden Kosten auf die kürzere Laufzeit.</p>
+</li>
+<li>
+<p><strong>Reflexion:</strong> Eine vorzeitige Auflösung kann sinnvoll sein, wenn die laufenden Kosten nicht mehr tragbar sind oder eine unerwartete Veränderung der Lebensumstände eintritt.</p>
+</li>
+</ul>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load password file.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Error fetching the password:', error);
+                document.getElementById('errorMessage').textContent = 'Error loading password. Please try again later.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Incorrect password. Please try again.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Allow pressing "Enter" to submit the password
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
