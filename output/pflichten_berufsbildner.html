@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pflichten_berufsbildner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <h2 id="ausbildungspflicht">Ausbildungspflicht</h2>
+<ul>
+<li><strong>Hauptverantwortlichkeiten:</strong></li>
+<li>Lernende müssen fachgemäß, systematisch und verständnisvoll ausgebildet werden.</li>
+<li>
+<p>Ausbildungsinhalte müssen den gesetzlichen Vorgaben entsprechen.</p>
+</li>
+<li>
+<p><strong>Stellvertreteranforderungen:</strong></p>
+</li>
+<li>Müssen dieselben Anforderungen erfüllen wie die Berufsbildenden.</li>
+<li>
+<p>Im Lehrvertrag definiert.</p>
+</li>
+<li>
+<p><strong>Wichtigkeit:</strong></p>
+</li>
+<li>Gewährleistet die Qualität der Ausbildung.</li>
+<li>Bereitet Lernende optimal auf den Beruf vor.</li>
+</ul>
+<hr />
+<h2 id="lohnzahlungspflicht">Lohnzahlungspflicht</h2>
+<ul>
+<li><strong>Verpflichtungen:</strong></li>
+<li>
+<p>Der im Lehrvertrag vereinbarte Lohn muss pünktlich gezahlt werden.</p>
+</li>
+<li>
+<p><strong>Festlegung:</strong></p>
+</li>
+<li>
+<p>Im Lehrvertrag geregelt.</p>
+</li>
+<li>
+<p><strong>Auswirkungen verspäteter Zahlungen:</strong></p>
+</li>
+<li>Kann finanzielle Probleme für die Lernenden verursachen.</li>
+<li>Mögliche rechtliche Konsequenzen für den Lehrbetrieb.</li>
+</ul>
+<hr />
+<h2 id="versicherungspflicht">Versicherungspflicht</h2>
+<ul>
+<li><strong>Erforderliche Versicherungen:</strong></li>
+<li>
+<p>Unfallversicherung (Berufs- und Nichtberufsunfälle).</p>
+</li>
+<li>
+<p><strong>Prämienzahlung:</strong></p>
+</li>
+<li>Berufsunfallversicherung: Vom Lehrbetrieb bezahlt.</li>
+<li>
+<p>Beiträge für AHV, IV, EO, und ALV: Ab dem Jahr, in dem die Lernenden 18 Jahre alt werden.</p>
+</li>
+<li>
+<p><strong>Wichtigkeit:</strong></p>
+</li>
+<li>Schutz vor finanziellen Risiken bei Unfällen.</li>
+</ul>
+<hr />
+<h2 id="ferien">Ferien</h2>
+<ul>
+<li><strong>Regelungen:</strong></li>
+<li>Lernende haben Anspruch auf gesetzliche Ferien.</li>
+<li>
+<p>Zwei Wochen müssen zusammenhängend gewährt werden.</p>
+</li>
+<li>
+<p><strong>Rolle der Erholung:</strong></p>
+</li>
+<li>
+<p>Wichtig für die physische und psychische Gesundheit.</p>
+</li>
+<li>
+<p><strong>Rechtliche Grundlagen:</strong></p>
+</li>
+<li>OR Art. 329.</li>
+</ul>
+<hr />
+<h2 id="urlaub-fur-ausserschulische-jugendarbeit">Urlaub für ausserschulische Jugendarbeit</h2>
+<ul>
+<li><strong>Anspruch:</strong></li>
+<li>
+<p>Eine Woche unbezahlt für Tätigkeiten wie J+S-Leiterkurse, Lagerbetreuung.</p>
+</li>
+<li>
+<p><strong>Antragstellung:</strong></p>
+</li>
+<li>
+<p>Muss mindestens zwei Monate im Voraus erfolgen.</p>
+</li>
+<li>
+<p><strong>Wichtigkeit:</strong></p>
+</li>
+<li>Fördert die persönliche Entwicklung und Verantwortungsbewusstsein.</li>
+</ul>
+<hr />
+<h2 id="berufsfachschulunterricht-und-uberbetriebliche-kurse">Berufsfachschulunterricht und überbetriebliche Kurse</h2>
+<ul>
+<li><strong>Teilnahme:</strong></li>
+<li>
+<p>Pflicht- und Freikurse ohne Lohnabzug.</p>
+</li>
+<li>
+<p><strong>Zusatzkosten:</strong></p>
+</li>
+<li>
+<p>Dürfen nicht den Lernenden in Rechnung gestellt werden.</p>
+</li>
+<li>
+<p><strong>Vorteile:</strong></p>
+</li>
+<li>Ergänzen die betriebliche Ausbildung durch fachliche Vertiefung.</li>
+</ul>
+<hr />
+<h2 id="lehrzeugnis">Lehrzeugnis</h2>
+<ul>
+<li><strong>Inhalte:</strong></li>
+<li>
+<p>Angaben über den erlernten Beruf, Dauer der Lehre, Fähigkeiten und Verhalten.</p>
+</li>
+<li>
+<p><strong>Ausstellung:</strong></p>
+</li>
+<li>
+<p>Nach Abschluss der Lehrzeit.</p>
+</li>
+<li>
+<p><strong>Wichtigkeit:</strong></p>
+</li>
+<li>Entscheidendes Dokument für die berufliche Zukunft.</li>
+</ul>
+<hr />
+<h2 id="weiterbeschaftigung">Weiterbeschäftigung</h2>
+<ul>
+<li><strong>Pflicht:</strong></li>
+<li>
+<p>Keine gesetzliche Verpflichtung zur Weiterbeschäftigung nach der Lehre.</p>
+</li>
+<li>
+<p><strong>Klärung:</strong></p>
+</li>
+<li>
+<p>Lernende sollten frühzeitig die Weiterbeschäftigung besprechen.</p>
+</li>
+<li>
+<p><strong>Auswirkungen:</strong></p>
+</li>
+<li>Bei Weiterbeschäftigung wird die Lehrzeit angerechnet.</li>
+</ul>
+<br>
+<img src="Allgemeinbildung_ZH_hep_claude.jpg" alt="Bild" style="max-width:100%; height:auto;">
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
