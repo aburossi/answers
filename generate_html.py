@@ -64,11 +64,14 @@ def generate_html():
         messagebox.showerror("Template Error", f"Error reading template file: {e}")
         return
 
-    # Convert Markdown to HTML with line breaks
-    html_content = markdown.markdown(markdown_text, extensions=['nl2br'])
+    # Convert Markdown to HTML
+    html_content = markdown.markdown(markdown_text)
 
     # Embed the HTML content and image into the template
-    html_output = template.replace("{{title}}", title).replace("{{content}}", html_content)
+    html_output = (template
+                   .replace("{{title}}", title)
+                   .replace("{{content}}", html_content))
+
     if image_path:
         image_filename = os.path.basename(image_path)
         html_output = html_output.replace("{{image}}", image_filename)
