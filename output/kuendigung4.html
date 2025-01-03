@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kuendigung4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <blockquote>
+<p>[!warning] kuendigung4<br />
+1. Die Weltreisenden können ihre Reise nicht geniessen, weil ihr <strong>Untermieter die Miete nicht zahlt</strong> und sie sich Sorgen um die finanzielle Situation machen.<br />
+2. Sie müssen den Untermieter <strong>schriftlich mahnen</strong> (per <strong>eingeschriebenen Brief</strong>) und ihm eine <strong>Frist von 30 Tagen</strong> setzen, um die offene Miete zu begleichen.<br />
+3. In der Mahnung muss <strong>explizit erwähnt</strong> werden, dass bei Nichteinhaltung der Frist die <strong>Kündigung</strong> erfolgt.<br />
+4. Nein, in diesem Fall hat der Untermieter <strong>keine Chance</strong>, die Kündigung anzufechten, da die <strong>Nichtzahlung der Miete</strong> ein triftiger Kündigungsgrund ist.<br />
+5. Nach Ablauf der 30-tägigen Mahnfrist können die Vermieter mit einer Frist von <strong>30 Tagen aufs nächste Monatsende kündigen</strong>.<br />
+6. Wenn der Untermieter die Wohnung nicht verlässt, können sich die Vermieter an das <strong>Gericht</strong> wenden, um eine <strong>Ausweisung</strong> zu erwirken.<br />
+7. Die Weltreisenden können jemandem in der Schweiz eine <strong>Vollmacht</strong> erteilen, der die Kündigung in ihrem Namen durchführt.</p>
+</blockquote>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
