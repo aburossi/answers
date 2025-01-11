@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arztzeugnis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <blockquote>
+<p>[!warning] Arztzeugnis
+1. Die Hörerin möchte nicht jedes Mal zum Arzt gehen, weil ihr der Arzt bei einem Migräneanfall nicht helfen kann und es ihr während eines Anfalls zu schlecht geht, um das Haus zu verlassen.
+2. Es gibt keine gesetzliche Regelung, ab wann ein Arztzeugnis vorgelegt werden muss. Im Zivilgesetzbuch steht lediglich, dass man seine Behauptungen beweisen muss.
+3. In den meisten Arbeitsverträgen und Gesamtarbeitsverträgen ist die Arztzeugnispflicht geregelt. Meistens wird ein Arztzeugnis nach drei Krankheitstagen verlangt.
+4. Die Rechtsexpertin sieht die Gefahr von Schikane und Rechtsmissbrauch, wenn der Chef bei jedem Migräneanfall ein Arztzeugnis verlangt.
+5. Die Rechtsexpertin schlägt vor, mit dem Arzt zu sprechen und ein Zeugnis über die chronische Erkrankung und die damit verbundenen Arbeitsausfälle ausstellen zu lassen. Dieses Zeugnis soll dem Arbeitgeber vorgelegt werden, um eine gemeinsame Lösung zu finden.
+6. Der Arzt kann ein Zeugnis über die chronische Erkrankung und die Arbeitsausfälle ausstellen und so die Situation der Hörerin gegenüber dem Arbeitgeber stärken.
+7. Individuelle Antworten, die aufzeigen, wie man in einer solchen Situation vorgehen kann (z.B. Gespräch mit dem Arbeitgeber suchen, Unterstützung von Kollegen oder einer Gewerkschaft suchen, rechtliche Beratung in Anspruch nehmen).</p>
+</blockquote>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
