@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fehler in der Werbung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <h1>LP-MATERIAL</h1>
+<blockquote>
+<p>[!warning] Fehler in der Werbung
+1. Frau Müller sah einen Kittel in einem Flyer für 139 Franken, online kostete er aber 239 Franken.
+2. Preise in der Werbung sind nicht verbindlich. «Preise in der Werbung, also im Prospekt, auf Kataloge, Flyer oder auch im Internet sind nicht verbindlich.»
+3. Prospekt, Kataloge, Flyer, Internetwerbung. «Preise in der Werbung, also im Prospekt, auf Kataloge, Flyer oder auch im Internet sind nicht verbindlich.»
+4. Werbung ist nicht verbindlich, der Händler kann den Preis im Laden oder online festlegen. «Darum kann Frau Müller nicht verlangen, dass sie diesen Kittel für 139 Franken kaufen kann.»
+5. Sie hätte in den AGB nach einem Widerrufsrecht suchen müssen. «Dann hätte sie in den allgemeinen Geschäftsbedingungen des Lades nachschauen müssen, ob sie ein Widerrufsrecht hat und ob sie diesen Kittel jetzt zurückgeben kann.»
+6. Widerrufsrecht nur bei Verträgen auf der Strasse, am Telefon oder Werbeveranstaltungen, nicht bei Online- oder Ladenkäufen (ausser freiwillig vom Laden). «In der Schweiz haben Konsumentinnen nur dann ein Widerrufsrecht, wenn es um einen Vertrag geht, den man auf der Strasse abgeschlossen hat, am Telefon oder an einer Werbeveranstaltung.»
+7. Im Laden nachfragen, Preis bestätigen lassen, evtl. schriftlich. (nicht explizit im Text, aber logische Schlussfolgerung)</p>
+</blockquote>
+<p>Vielleicht ist Ihnen das ja auch schon passiert. Eine Aktion in einem Prospekt und Sie denken, «Wow, das muss ich gleich posten.» Aber dann heisst es im Laden oder beim Bestellen im Internet, «Ups, da ist ein Fehler passiert beim Anschreiben. Das Produkt kostet ein bisschen mehr.» So einen Ärger hat Espresso-Hörerin Margrit Müller von Botmigen Basel-Land erlebt. Sie hatte einen Flyer in ihrem Briefkasten und dort entdeckte sie einen Kittel für 139 Franken. Ein sensationeller Preis. Margrit Müller sitzt deshalb am Kompi und will den Kittel bestellen. Nur, auf der Webseite steht dann, der kostet 239 Franken, also 100 Fr. mehr. Ich habe bei der Firma nachgefragt und die haben gesagt, dass dieser Preis ein Fehler sei. Im Prospekt gilt der Preis auf der Webseite. Ich habe immer gemeint, dass der Preis verbindlich sei. Ist das so, oder täuscht du mich? Gabriela Baumgartner bei mir im Studio. Wie ist das? Frau Müller täuscht sich tatsächlich. Wie übrigens viele Leute auch. Preise in der Werbung, also im Prospekt, auf Kataloge, Flyer oder auch im Internet sind nicht verbindlich. Darum kann Frau Müller nicht verlangen, dass sie diesen Kittel für 139 Franken kaufen kann. Sie muss entweder 239 Franken zahlen oder sie muss die Finger davonlassen. Das heisst also, dass man hinter diesen Preisen auf Flyer, Prospekt oder auch in Newslettern immer ein Fragezeichen machen muss. Margrit Müller hat dem Händler angerufen, als sie sah, dass im Internet ein anderer Preis steht. Was wäre dann passiert, wenn ihr das nicht aufgefallen wäre, also wenn sie diesen Blazer bestellt hätte? Dann hätte sie auf der Rechnung wahrscheinlich gesehen, dass dieser Kittel mehr kostet, als sie meinte. Und wenn ihr das zu teuer gewesen wäre, dann hätte sie in den allgemeinen Geschäftsbedingungen des Lades nachschauen müssen, ob sie ein Widerrufsrecht hat und ob sie diesen Kittel jetzt zurückgeben kann. Wenn das aber nicht der Fall gewesen wäre, wenn es kein Widerrufsrecht gäbe bei diesem Laden, dann hätte sie diesen Kittel wohl oder übel nehmen müssen, und zwar zum höheren Preis. Hat man dann bei solchen Bestellungen nicht automatisch ein Rückgaberecht? Nein, automatisch eben nicht. Bei vielen Versandhäusern, also zum Beispiel bei Zalanda, welches eines der ganz grossen ist, ist das aber so. Aber rechtlich gesehen hat man als Kundin nicht automatisch ein Recht, etwas zurückzugeben, wenn man es gekauft hat. In der Schweiz haben Konsumentinnen nur dann ein Widerrufsrecht, wenn es um einen Vertrag geht, den man auf der Strasse abgeschlossen hat, am Telefon oder an einer Werbeveranstaltung. Und wenn ich etwas über das Internet bestelle oder eben im Laden kaufe, dort habe ich kein Rückgaberecht, kein Widerrufsrecht, ausser dieser Laden gibt mir das von sich aus, also freiwillig. Falsch angeschriebene Preise, also da kommen mir auf der Redaktion ja immer wieder Fragen dazu über. Und uns interessiert natürlich, was Sie zu Hause für Erfahrungen gemacht haben. Machen Sie uns doch ein Mail dazu, espresso at srf.ch</p>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
