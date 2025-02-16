@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jobweg</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <h1>LP-MATERIAL</h1>
+<blockquote>
+<p>[!warning] {name_answers}
+1. Die vier Varianten sind: <strong>Frühzeitige Pensionierung</strong>, <strong>Weiterzahlen in die Pensionskasse</strong>, <strong>Einzahlung in eine Freizügigkeitsstiftung</strong> und <strong>Überweisung an die BVG-Auffangvorrichtung</strong>.
+2. <strong>Frühzeitige Pensionierung</strong> bedeutet, das Pensionskassengeld vorzeitig zu beziehen, was zu <strong>weniger Altersgeld</strong> führt, da man nicht weiter einzahlt. Zudem kann das <strong>Arbeitslosengeld</strong> geringer ausfallen, da die Pensionskasse als Einkommen gilt. Ein Vorbezug ist oft erst ab 60 möglich.
+3. <strong>Weiterzahlen in die Pensionskasse</strong> ohne Job ist möglich, meist ab 58. <strong>Vorteil:</strong> Versicherungsschutz gegen Invalidität und Tod bleibt bestehen. <strong>Nachteil:</strong> Man muss <strong>Arbeitgeber- und Arbeitnehmerbeiträge selbst übernehmen</strong>, was teuer sein kann. Bei längerer Dauer als zwei Jahre entfällt oft die Wahl zwischen Kapital und Rente.
+4. Eine <strong>Freizügigkeitsstiftung</strong> ist eine Möglichkeit, das Pensionskassengeld <strong>zwischenzulagern</strong>, z.B. bei Jobverlust. <strong>Vorteile:</strong>  Möglichkeit, das Geld als Wertschriften anzulegen für potenziell <strong>höheren Ertrag</strong> und erhebliche <strong>Steuerersparnisse</strong>, da das Geld nicht als Vermögen und die Erträge nicht als Einkommen gelten.
+5. Geld in der Freizügigkeitsstiftung ist <strong>steuerbegünstigt</strong>. Es gilt nicht als Vermögen und die Erträge nicht als Einkommen, was zu <strong>Steuerersparnissen</strong> führt. Bei Aufteilung auf zwei Stiftungen und gestaffeltem Bezug sind weitere Steuerersparnisse möglich.
+6. Die <strong>BVG-Auffangvorrichtung</strong> ist eine weitere Option zur Überweisung des Pensionskassengeldes. Im Gegensatz zur Freizügigkeitsstiftung kann man später auch eine <strong>Rente beziehen</strong>.  Man bleibt gegen Tod und Invalidität versichert, zahlt aber alle Beiträge selbst und ist nur für das <strong>Minimum versichert</strong>, was zu einer kleineren Rente führt.
+7. Die Situation ist <strong>komplex</strong> und hängt von der <strong>individuellen finanziellen Situation</strong> ab. Zudem spielen Fragen zur AHV und zum Arbeitslosengeld eine Rolle. Eine <strong>Beratung</strong> durch Banken, Versicherungen oder unabhängige Fachleute hilft, den <strong>Durchblick</strong> zu bekommen und die beste Entscheidung zu treffen.</p>
+</blockquote>
+<h2>Transcript</h2>
+<p>«SRF 1» Wenn man eine Kündigung bekommt, dann ist das nichts Schönes. Das ist ein Schlag ins Gesicht. Besonders dann noch, wenn man quasi auf der Zielgeraden des Arbeitslebens ist. Kurz vor der Pensionierung. Da plagen einem dann schnell existenzielle Sorgen. Einen neuen Job finden ist schwierig. Und wie soll man so für das Alter vorsorgen? Damit man nicht zu viel Geld verliert, muss man in so einem Fall einiges entscheiden. Zum Beispiel, was man mit dem Pensionskassengeld macht. Das schauen wir uns jetzt an mit Maria Kressbach, unserer Ratgeber-Expertin für Konsumgeld und Arbeit. Maria Kressbach, was gibt es eigentlich für Möglichkeiten in so einem Moment? Man kann sagen, es gibt vier Varianten. Eine davon, man lässt sich frühzeitig pensionieren und bezieht das Pensionskassengeld vor. So habe ich aber natürlich weniger Altersgeld, wenn ich weiter einzahlen würde. Und auch die Arbeitslosenversicherung, die kann ich ja noch zwei Jahre beziehen. Die zahlt weniger, weil eben die Pensionskasse dann als Einkommen gilt. Und dann gibt es nochmals einen Knackpunkt. Ein Vorbezug geht bei vielen Pensionskassen erst mit 60. Also nicht unbedingt für alle geeignet. Könnte man jetzt auch einfach weitere Pensionskassen einzahlen, obwohl man keinen Job hat? Ja, das geht. Bei den meisten Pensionskassen allerdings auch frühestens mit 58. Und das Gute bei dieser Variante ist, man ist weiter gegen Invalidität und Tod versichert. Der Nachteil, weil ich keine Stelle mehr habe, muss ich die Beiträge des Arbeitgebers auch übernehmen. Also das kann sich dann allweile gar nicht jeder leisten. Und was ich auch wissen muss, wenn ich das länger als zwei Jahre mache, dann kann ich meistens nicht mehr wählen, ob ich das Kapital oder die Rente will. Häufig gibt es dann nur noch eine Rentenzahlung. Jetzt sind wir immer so beim Alter, 58, 60. Das kann man aber auch früher treffen. Ja. Was mache ich dann? Dann kann man z.B. das Pensionskassengeld in eine Freizügigkeitsstiftung einzahlen, auf ein Konto oder auch als Wertschriften anlegen. So und so vielleicht dann noch ein wenig mehr Ertrag rausholen. Die Voraussetzung ist da, ich muss mich um eine neue Stelle bemühen in dieser Zeit. Und gut zu wissen ist sicher auch, wenn ich das mache, dann kann ich das Geld später nur als Ganzes bezügen, nicht mehr als Rente. Der Vorteil ist aber, und das ist ein grosser Vorteil, man spart wirklich viel Steuern. Das Geld bei der Freizügigkeitsstiftung gilt nämlich nicht als Vermögen und die Erträge auch nicht als Einkommen. Und noch mehr sparen kann man, wenn man das Geld bei zwei verschiedenen Stiftungen anlegt. Dann kann man es nämlich gestaffelt bezügen und spart dann nochmals mehrere Tausend Franken Steuern. Und hat so natürlich wieder mehr Verteiltes vor, so auf der Seite. Genau. Jetzt bleibt noch die Möglichkeit 4. Welche ist das? Das wäre dann die BVG-Auffangvorrichtung. Ich kann mein Pensionskassengeld auch dorthin überweisen und auch dort weiter einzahlen. Im Gegensatz zur Freizügigkeitsstiftung kann ich später hier auch eine Rente bezügen. Und auch hier, ein Vorteil, bin ich weiter gegen Tod und Invalidität versichert. Aber auch hier zahle ich die Beiträge selber, alle Beiträge, auch vom Arbeitgeber. Und ich bin nur für das Minimum versichert. Also die Rente ist kleiner als bei den meisten Pensionskassen. Das sind also die vier Möglichkeiten. Das ist jetzt so locker und flockig erzählt, Maria Gressbach. Aber ganz ehrlich, wenn es mich jetzt wirklich in so einem Moment treffen würde, ich wüsste gerade nicht, was machen. Ja, ich auch nicht. Es ist wirklich kompliziert. Es kommt ja auch immer auf die finanzielle Situation an. Und dann kommt auch noch die Frage, was man bei so einer Zwangspensionierung mit dem AHV machen soll. Oder wie es mit dem Arbeitslosengeld genau aussieht. Das sollte ja schlussendlich alles ineinander reinspielen. Darum ist es sicher gut, wenn man sich beraten lässt von jemandem, der hier den Durchblick hat. Zum Beispiel bei der Bank, Versicherung oder am besten bei unabhängigen Fachleuten. Mehr Informationen findet ihr, schaut euch das an auf srf1.ch. Unter der Sendung Ratgeber, dort gibt es auch noch mehr interessante Links zu weiteren Fragen rund um die Pensionskasse. Wichtiges Thema. Mehr Infos auf srf1.ch</p>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
