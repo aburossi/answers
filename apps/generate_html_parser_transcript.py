@@ -9,8 +9,8 @@ def extract_transcript_from_folder1(file_path):
     Extracts the transcript from an MD file in folder1.
     If YAML front matter is present (enclosed between lines with only '---'),
     the code searches for a line starting with "## Transcript" after the YAML block.
-    - If found, extraction starts at that line.
-    - If not found, the heading "## Transcript" is inserted at the beginning.
+      - If found, extraction starts at that line.
+      - If not found, the heading "## Transcript" is inserted at the beginning.
     If no YAML is present, the entire file is returned as-is.
     """
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -72,7 +72,7 @@ def find_corresponding_file(filename, folder2):
     return None
 
 
-# --- Additional Text Processing ---
+# --- Additional Text Processing Functions ---
 
 def process_additional_text(raw_text):
     """
@@ -130,6 +130,38 @@ def process_additional_text(raw_text):
     return final_text
 
 
+def delete_extracted_text(file_path, marker="%-%-%-"):
+    """
+    Deletes the marker and all text after it from the file.
+    This function reads the file, finds the first occurrence of a line starting
+    with the marker, and then writes back only the content before that marker.
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+    except Exception as e:
+        print(f"Error reading file {file_path} for deletion: {e}")
+        return
+
+    new_lines = []
+    marker_found = False
+    for line in lines:
+        if line.strip().startswith(marker):
+            marker_found = True
+            break
+        new_lines.append(line)
+    
+    if marker_found:
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.writelines(new_lines)
+            print(f"Deleted extracted text after marker in {file_path}")
+        except Exception as e:
+            print(f"Error writing file {file_path} during deletion: {e}")
+    else:
+        print(f"Marker '{marker}' not found in {file_path}; nothing deleted.")
+
+
 # --- HTML Generation Function ---
 
 def generate_html_from_markdown(markdown_content, title, output_html_path, template_path):
@@ -172,9 +204,10 @@ def process_files_and_generate_html(folder1, folder2, html_output_dir):
          - The original LP heading
          - A new heading "## Antworten Verständnisfragen"
          - A clean numbered list of answers.
-      2. Combines this processed additional text with the transcript.
-      3. Saves a new Markdown file in folder1.
-      4. Converts the combined content into HTML using a template. The HTML file is saved in html_output_dir.
+      2. Deletes the extracted text from the folder2 file.
+      3. Combines the processed additional text and transcript.
+      4. Saves a new Markdown file in folder1.
+      5. Converts the combined content into HTML using a template. The HTML file is saved in html_output_dir.
     """
     # Determine template location (assumed to be in the same folder as this script)
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -209,6 +242,9 @@ def process_files_and_generate_html(folder1, folder2, html_output_dir):
 
         # Process the additional text to clean and reformat it.
         processed_additional_text = process_additional_text(raw_additional_text)
+
+        # Delete the extracted text from the folder2 file.
+        delete_extracted_text(corresponding_file, marker="%-%-%-")
 
         # Combine the processed additional text and transcript.
         combined_content = processed_additional_text + "\n\n" + transcript

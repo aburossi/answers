@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Die Pressefreiheit gerät unter Druck</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <h1>LP-MATERIAL</h1>
+<h2>Antworten Verständnisfragen</h2>
+<ol>
+<li>Im Radiobeitrag wird genannt, dass die Pressefreiheit durch <strong>staatliche Repression</strong>, <strong>ökonomischen Druck</strong> und <strong>neue Technologien</strong> bedroht wird.</li>
+<li>Als Beispiele für Länder mit eingeschränkter Pressefreiheit werden im Beitrag die <strong>Türkei</strong>, <strong>Russland</strong> und <strong>China</strong> erwähnt.</li>
+<li>Der Beitrag sagt, dass soziale Medien zwar neue Möglichkeiten für Journalisten bieten, aber auch zur <strong>Verbreitung von Desinformation</strong> und <strong>Hassreden</strong> beitragen können und die <strong>klassischen Medien unter Druck setzen</strong>.</li>
+<li>Pressefreiheit ist für eine Demokratie unerlässlich, weil sie es den Bürgern ermöglicht, <strong>informierte Entscheidungen</strong> zu treffen und die <strong>Regierung zur Rechenschaft zu ziehen</strong>.  "<strong>Ohne freie Medien keine Demokratie</strong>"</li>
+<li>Im Beitrag werden verschiedene Formen von Druck auf die Pressefreiheit dargestellt, darunter <strong>direkte Zensur</strong>, <strong>Gesetze, die Journalisten behindern</strong>, <strong>ökonomische Abhängigkeit von Regierungen oder Unternehmen</strong> und <strong>Gewalt gegen Journalisten</strong>.</li>
+<li>Die Einschränkung der Pressefreiheit <strong>verhindert eine freie Meinungsbildung</strong> und kann zu <strong>Manipulation</strong> der öffentlichen Meinung führen. Politische Prozesse können <strong>undemokratischer</strong> werden, wenn die Medien nicht frei berichten können.</li>
+<li>Als Journalist in einem Land mit eingeschränkter Pressefreiheit könnte man Strategien wie <strong>verdeckte Berichterstattung</strong>, <strong>Nutzung verschlüsselter Kommunikation</strong>, <strong>Zusammenarbeit mit internationalen Medien</strong> und <strong>Aufbau von Netzwerken</strong> nutzen, um die Arbeit zu machen und die Öffentlichkeit zu informieren.</li>
+</ol>
+<h2>Transcript</h2>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>

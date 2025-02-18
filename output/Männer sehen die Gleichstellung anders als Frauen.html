@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Männer sehen die Gleichstellung anders als Frauen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <h1>LP-MATERIAL</h1>
+<h2>Antworten Verständnisfragen</h2>
+<ol>
+<li>Männer sehen Gleichstellung eher als erreicht an, während Frauen sie noch nicht als vollständig umgesetzt betrachten.</li>
+<li></li>
+<li>Männer und Frauen haben unterschiedliche Erfahrungen und Perspektiven auf Gleichstellung. Männer würden Gleichstellung oft als bereits gegeben wahrnehmen, während Frauen die noch bestehenden Ungleichheiten stärker sehen.</li>
+<li></li>
+<li>Ein Beispiel ist die Aussage einer Frau im Beitrag, die sich fragt, warum immer noch mehrheitlich Männer in Führungspositionen sind, während ein Mann im Beitrag sagt, dass er Gleichstellung eigentlich schon lebe.</li>
+<li></li>
+<li>Es ist wichtig, die Perspektive des anderen Geschlechts zu verstehen, um einen konstruktiven Dialog zu ermöglichen und gemeinsam an der Gleichstellung zu arbeiten, anstatt aneinander vorbeizureden.</li>
+<li></li>
+<li>Die Kernaussage ist, dass es in der Wahrnehmung von Gleichstellung eine Kluft zwischen Männern und Frauen gibt, die auf unterschiedlichen Erfahrungen und gesellschaftlichen Positionen beruht.</li>
+<li></li>
+<li>Gesellschaftliche Normen und traditionelle Rollenbilder prägen die Erwartungen an Männer und Frauen und beeinflussen, wie Gleichstellung wahrgenommen und bewertet wird. Diese tief verwurzelten Vorstellungen können dazu führen, dass Ungleichheiten übersehen oder als weniger problematisch wahrgenommen werden, insbesondere von denjenigen, die von den bestehenden Strukturen profitieren.</li>
+<li></li>
+<li>Gespräche über Gleichstellung sollten so gestaltet sein, dass sie einen offenen Austausch ermöglichen, in dem beide Geschlechter ihre Perspektiven und Erfahrungen einbringen können, ohne sich gegenseitig zu beschuldigen oder zu verurteilen. Es braucht ein Klima des Zuhörens und des Respekts, um Missverständnisse abzubauen und ein gemeinsames Verständnis zu entwickeln.</li>
+</ol>
+<h2>Transcript</h2>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>

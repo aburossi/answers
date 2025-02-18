@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Collecting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <h1>LP-MATERIAL</h1>
+<h2>Antworten Verständnisfragen</h2>
+<ol>
+<li>E-Collecting bezeichnet die <strong>elektronische Sammlung von Unterschriften</strong> für Initiativen und Referenden über das Internet, als Alternative zur traditionellen Sammlung auf Papier.</li>
+<li>E-Collecting könnte das Sammeln von Unterschriften <strong>vereinfachen und beschleunigen</strong>, sowie <strong>Kosten sparen</strong>. Es könnte auch die <strong>politische Partizipation erhöhen</strong>, indem es bequemer und zugänglicher ist.</li>
+<li>Es gibt Bedenken hinsichtlich der <strong>Sicherheit der Daten</strong> und der <strong>Verifizierung der Identität</strong> der Unterzeichnenden, um <strong>Missbrauch und Fälschungen</strong> zu verhindern.</li>
+<li>Mittels einer <strong>sicheren elektronischen ID</strong> (e-ID) oder <strong>SwissID</strong> könnten Bürger ihre Identität digital bestätigen und eine Unterschrift rechtsgültig online leisten.</li>
+<li>Die <strong>Kantone spielen eine wichtige Rolle</strong>, da sie für die <strong>Organisation von Abstimmungen und Wahlen</strong> zuständig sind und E-Collecting auf kantonaler Ebene einführen könnten, bevor es national umgesetzt wird.</li>
+<li>Traditionelles Unterschriftensammeln ist <strong>zeitaufwendig und personalintensiv</strong>, während E-Collecting <strong>Anfangs-Investitionen</strong> erfordert, aber langfristig <strong>kostengünstiger</strong> sein könnte.</li>
+<li>E-Collecting könnte die <strong>direkte Demokratie stärken</strong>, indem es die <strong>Beteiligungsmöglichkeiten erweitert</strong> und <strong>vereinfacht</strong>. Es ist jedoch wichtig, <strong>Sicherheitsrisiken zu minimieren</strong> und sicherzustellen, dass alle Bevölkerungsgruppen Zugang haben und <strong>keine digitale Ausgrenzung</strong> entsteht.</li>
+</ol>
+<h2>Transcript</h2>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
