@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unruhen in den USA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px; /* Optional: etwas Padding für besseren Abstand */
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0 auto; /* Zentriert die Box horizontal */
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .answers {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Passwort eingeben, um Antworten anzuzeigen</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Absenden</button>
+        <div class="error" id="errorMessage"></div>
+        
+        <div class="answers" id="answersSection">
+            <h3>Antworten:</h3> 
+            <p>LP-MATERIAL
+Unruhen in den USA - Lösungsvorschläge
+Antwort zu Frage 1: Die Proteste eskalierten, weil US-Präsident Trump gegen den Willen der kalifornischen Behörden die Nationalgarde ins Stadtzentrum von L.A. beorderte. Zudem haben Demonstrierende eine Stadtautobahn blockiert und Autos in Brand gesetzt.
+Antwort zu Frage 2: Die Demonstrierenden sind hauptsächlich Immigranten, Aktivistinnen für Einwanderungsrechte und solidarische Bürger, viele aus der Latino-Community. Ihr Anliegen ist der Widerstand gegen die Festnahmen von Menschen ohne gültige Aufenthaltspapiere durch die Behörde ICE, die sie als willkürlich und unmenschlich empfinden.
+Antwort zu Frage 3: Die Nationalgarde kommt normalerweise bei Naturkatastrophen (wie Waldbränden oder Überschwemmungen) zum Einsatz, um die örtlichen Behörden zu unterstützen. Sie wird auch bei schweren Unruhen eingesetzt, um die öffentliche Ordnung wiederherzustellen.
+Antwort zu Frage 4: Kalifornien ist Trump ein Dorn im Auge, weil der Bundesstaat Gesetze erlassen hat, um Menschen ohne gültige Papiere zu schützen. Zum Beispiel geben Schul- oder Gesundheitsbehörden keine Daten an die Einwanderungsbehörde ICE weiter und auch die lokale Polizei kooperiert nur sehr begrenzt.
+Antwort zu Frage 5: Der Einsatz ist sehr aussergewöhnlich, weil der Präsident die Nationalgarde gegen den Willen des Gouverneurs von Kalifornien mobilisiert hat. Normalerweise fordert der Gouverneur eines Bundesstaates den Einsatz an. Ein solcher Fall war laut dem Beitrag zuletzt 1965.
+Antwort zu Frage 6: Im Beitrag wird die Frage aufgeworfen, "ob die lokale Polizei tatsächlich, so wie es Trump behauptet, überfordert war." Es wird auch erwähnt, dass die Ankündigung von Trump, die Nationalgarde zu mobilisieren, die Proteste erst richtig befeuert haben könnte.
+Antwort zu Frage 7: Der Gouverneur könnte argumentieren, dass der Präsident seine Befugnisse überschritten hat. Das normale Vorgehen ist, dass der Gouverneur den Einsatz der Nationalgarde anfordert. Da Trump dies gegen den Willen des Gouverneurs tat, könnte dies als Machtmissbrauch und unrechtmässiger Eingriff in die Rechte des Bundesstaates angesehen werden.</p>
+        </div>
+    </div>
+
+    <script>
+        let correctPassword = "";
+
+        // Fetch the password from the external JSON file
+        fetch('passwords.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der Passwortdatei.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                correctPassword = data.password;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen des Passworts:', error);
+                document.getElementById('errorMessage').textContent = 'Fehler beim Laden des Passworts. Bitte versuche es später erneut.';
+            });
+
+        function checkPassword() {
+            const userPassword = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const answersSection = document.getElementById('answersSection');
+
+            if (userPassword === correctPassword) {
+                answersSection.style.display = 'block';
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Falsches Passwort. Bitte versuche es erneut.';
+                answersSection.style.display = 'none';
+            }
+        }
+
+        // Ermöglicht das Absenden des Passworts durch Drücken der "Enter"-Taste
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
